@@ -1,7 +1,7 @@
 import collections
 import copy
 import functools
-from typing import List
+from typing import List, Set
 
 from test_framework import generic_test
 from test_framework.test_failure import TestFailure
@@ -14,8 +14,39 @@ Coordinate = collections.namedtuple('Coordinate', ('x', 'y'))
 
 def search_maze(maze: List[List[int]], s: Coordinate,
                 e: Coordinate) -> List[Coordinate]:
-    # TODO - you fill in here.
-    return []
+
+    def step_is_allowed(curr: Coordinate, next: Coordinate) -> bool:
+        if not (0 <= next.x < len(maze) 
+                and 0 <= next.y < len(maze[curr.x])
+                and maze[next.x][next.y] == WHITE):
+            return False
+        
+        return True
+    
+    def reachable(curr: Coordinate) -> Set[Coordinate]:
+        return {coord for coord in map(Coordinate, 
+            (curr.x, curr.x, curr.x - 1, curr.x + 1),
+            (curr.y + 1, curr.y - 1, curr.y, curr.y))
+            if step_is_allowed(curr, coord)}
+        
+    path = [s]
+    curr = s
+    visited = set()
+    to_visit = collections.deque()
+    
+    while curr != e:
+        visited.add(curr)
+        candidates = reachable(curr) - visited    # O(1) for constant len(reachable)
+        for space in candidates:
+            to_visit.append(path + [space])   # Add to right side of queue
+        
+        if not to_visit:
+            return []   # no solution
+    
+        path = to_visit.popleft()   # get next off left side of queue
+        curr = path[-1]
+    
+    return path
 
 
 def path_element_is_feasible(maze, prev, cur):
