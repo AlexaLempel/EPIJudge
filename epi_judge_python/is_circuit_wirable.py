@@ -1,4 +1,5 @@
 import functools
+from collections import deque
 from typing import List
 
 from test_framework import generic_test
@@ -12,8 +13,23 @@ class GraphVertex:
 
 
 def is_any_placement_feasible(graph: List[GraphVertex]) -> bool:
-    # TODO - you fill in here.
-    return True
+    def can_partition_bfs(vertex: GraphVertex) -> bool:
+        vertex.d = 0
+        to_visit = deque([vertex])
+
+        while to_visit:
+            current = to_visit.popleft()
+
+            for edge in current.edges:
+                if edge.d == current.d:
+                    return False
+                if edge.d == -1:
+                    edge.d = not current.d
+                    to_visit.append(edge)
+        
+        return True
+    
+    return all(can_partition_bfs(vertex) for vertex in graph if vertex.d == -1)
 
 
 @enable_executor_hook

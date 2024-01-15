@@ -1,5 +1,5 @@
 import collections
-from typing import List
+from typing import List, Dict
 
 from test_framework import generic_test
 from test_framework.test_failure import TestFailure
@@ -8,12 +8,24 @@ from test_framework.test_failure import TestFailure
 class GraphVertex:
     def __init__(self, label: int) -> None:
         self.label = label
-        self.edges: List['GraphVertex'] = []
+        self.edges: List[GraphVertex] = []
 
 
 def clone_graph(graph: GraphVertex) -> GraphVertex:
-    # TODO - you fill in here.
-    return GraphVertex(0)
+    def traverse_dfs(graph: GraphVertex, 
+                     visited: Dict[int, GraphVertex]) -> GraphVertex:
+        if graph.label in visited:
+            return visited[graph.label]
+        
+        graph_copy = GraphVertex(graph.label)
+        visited[graph.label] = graph_copy
+
+        for edge in graph.edges:
+            graph_copy.edges.append(traverse_dfs(edge, visited))
+
+        return graph_copy
+    
+    return traverse_dfs(graph, {})
 
 
 def copy_labels(edges):

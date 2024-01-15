@@ -2522,7 +2522,7 @@ problem_mapping = {
                 "total": 91
             },
             "Python: graph_clone.py": {
-                "passed": 0,
+                "passed": 91,
                 "total": 91
             }
         },
@@ -2536,7 +2536,7 @@ problem_mapping = {
                 "total": 85
             },
             "Python: is_circuit_wirable.py": {
-                "passed": 0,
+                "passed": 85,
                 "total": 85
             }
         },
@@ -2550,7 +2550,7 @@ problem_mapping = {
                 "total": 48
             },
             "Python: string_transformability.py": {
-                "passed": 0,
+                "passed": 48,
                 "total": 48
             }
         },
