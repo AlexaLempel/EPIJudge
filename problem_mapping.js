@@ -2564,7 +2564,7 @@ problem_mapping = {
                 "total": 69
             },
             "Python: max_teams_in_photograph.py": {
-                "passed": 0,
+                "passed": 69,
                 "total": 69
             }
         }
