@@ -1,9 +1,16 @@
 from test_framework import generic_test
 
 
+# def parity(x: int) -> int:
+#     ans  = 0
+#     while x:
+#         x = x & (x - 1) # Flip right-most 1 to 0
+#         ans = not ans
+#     return ans
+
+
 def parity(x: int) -> int:
-    # TODO - you fill in here.
-    return 0
+    return x.bit_count() % 2
 
 
 if __name__ == '__main__':

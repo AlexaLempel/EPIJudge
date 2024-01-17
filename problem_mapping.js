@@ -24,7 +24,7 @@ problem_mapping = {
                 "total": 10000
             },
             "Python: parity.py": {
-                "passed": 0,
+                "passed": 10000,
                 "total": 10000
             }
         },
@@ -80,7 +80,7 @@ problem_mapping = {
                 "total": 10006
             },
             "Python: primitive_multiply.py": {
-                "passed": 0,
+                "passed": 10006,
                 "total": 10006
             }
         },
@@ -94,7 +94,7 @@ problem_mapping = {
                 "total": 10000
             },
             "Python: primitive_divide.py": {
-                "passed": 0,
+                "passed": 10000,
                 "total": 10000
             }
         },
@@ -164,7 +164,7 @@ problem_mapping = {
                 "total": 10000
             },
             "Python: rectangle_intersection.py": {
-                "passed": 0,
+                "passed": 10000,
                 "total": 10000
             }
         }
