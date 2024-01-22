@@ -3,36 +3,39 @@ from typing import List
 from test_framework import generic_test
 
 
-def buy_and_sell_stock_twice(prices: List[float]) -> float:
+# def buy_and_sell_stock_twice(prices: List[float]) -> float:
+#     min_price_so_far = prices[0]
+#     max_first_profit = [0 for _ in prices]
 
-    max_total_profit, min_price_so_far = 0.0, float('inf')
-    first_buy_sell_profits = [0.0] * len(prices)
-    # Forward phase. For each day, we record maximum profit if we sell on that
-    # day.
-    for i, price in enumerate(prices):
-        min_price_so_far = min(min_price_so_far, price)
-        max_total_profit = max(max_total_profit, price - min_price_so_far)
-        first_buy_sell_profits[i] = max_total_profit
+#     # max 1st profit if sell on or before day i
+#     for i in range(1, len(prices)):
+#         min_price_so_far = min(prices[i], min_price_so_far)
+#         max_first_profit[i] = max(max_first_profit[i-1], 
+#                                   prices[i] - min_price_so_far)
 
-    # Backward phase. For each day, find the maximum profit if we make the
-    # second buy on that day.
-    max_price_so_far = float('-inf')
-    for i, price in reversed(list(enumerate(prices[1:], 1))):
-        max_price_so_far = max(max_price_so_far, price)
-        max_total_profit = max(
-            max_total_profit,
-            max_price_so_far - price + first_buy_sell_profits[i])
-    return max_total_profit
+#     # max second profit if buy on day i
+#     max_second_profit = [0 for _ in prices]
+#     for i in reversed(range(0, len(prices) - 1)):
+#         next_day_diff = prices[i + 1] - prices[i]
+#         max_second_profit[i] = max(next_day_diff,
+#                                   next_day_diff + max_second_profit[i + 1])
+    
+#     return max([max_first_profit[i] + max_second_profit[i] for i in range(len(prices))])
 
 
-def buy_and_sell_stock_twice_constant_space(prices):
-    min_prices, max_profits = [float('inf')] * 2, [0] * 2
+def buy_and_sell_stock_twice(prices):
+    min1 = min2 = float('inf')
+    max1 = max2 = 0
     for price in prices:
-        for i in reversed(range(2)):
-            max_profits[i] = max(max_profits[i], price - min_prices[i])
-            min_prices[i] = min(min_prices[i],
-                                price - (0 if i == 0 else max_profits[i - 1]))
-    return max_profits[-1]
+         # max profit if making the first sale today
+        max1 = max(max1, price - min1)  # current price - previous 1st sale min
+        min1 = min(min1, price) # min price so far
+
+        # max profit if making the second sale today
+        max2 = max(max2, price - min2)  # current price - previous 2nd sale min
+        min2 = min(min2, price - max1)
+
+    return max2
 
 
 if __name__ == '__main__':

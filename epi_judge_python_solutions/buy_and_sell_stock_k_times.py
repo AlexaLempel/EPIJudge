@@ -4,11 +4,11 @@ from test_framework import generic_test
 
 
 def buy_and_sell_stock_k_times(prices: List[float], k: int) -> float:
-
     if k == 0:
         return 0.0
     elif 2 * k >= len(prices):
         return sum(max(0, b - a) for a, b in zip(prices[:-1], prices[1:]))
+    
     min_prices, max_profits = [float('inf')] * k, [0.0] * k
     for price in prices:
         for i in reversed(range(k)):
